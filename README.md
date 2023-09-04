@@ -1,4 +1,4 @@
-# RobloxPatcher-MacOS
+# RobloxPatcher
 
 This tool offers various utilities for Roblox.
 
