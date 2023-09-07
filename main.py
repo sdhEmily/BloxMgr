@@ -11,8 +11,8 @@ def getkey(): # Credit to https://stackoverflow.com/a/1840
 
 # Initialize Data Directory
 
-datapath = os.path.expanduser('~') + "/Library/Application Support/sdhEmily.RobloxPatcher"
-escdatapath = os.path.expanduser('~') + "/Library/Application\ Support/sdhEmily.RobloxPatcher"
+datapath = os.path.expanduser('~') + "/Library/Application Support/sdhhhhh.RobloxPatcher"
+escdatapath = os.path.expanduser('~') + "/Library/Application\ Support/sdhhhhh.RobloxPatcher"
 robloxapp = "/Applications/Roblox.app/Contents"
 if not os.path.exists(datapath):
   os.makedirs(datapath)
@@ -140,8 +140,8 @@ def oldoof():
     if os.path.exists(robloxapp + "/oldResources"):
       if os.path.exists(robloxapp + "/oldResources/content/sounds/oldouch.ogg"):
         os.rename(robloxapp + "/oldResources/content/sounds/ouch.ogg", robloxapp + "/oldResources/content/sounds/oldouch.ogg")
-        os.system("curl https://github.com/sdhEmily/RobloxPatcher/raw/main/ouch.ogg -Lo " + robloxapp + "/oldResources/content/sounds/ouch.ogg")
-    os.system("curl https://github.com/sdhEmily/RobloxPatcher/raw/main/ouch.ogg -Lo " + robloxapp + "/Resources/content/sounds/ouch.ogg")
+        os.system("curl https://github.com/sdhhhhh/RobloxPatcher-MacOS/raw/main/ouch.ogg -Lo " + robloxapp + "/oldResources/content/sounds/ouch.ogg")
+    os.system("curl https://github.com/sdhhhhh/RobloxPatcher-MacOS/raw/main/ouch.ogg -Lo " + robloxapp + "/Resources/content/sounds/ouch.ogg")
     olddeathapplied = "[APPLIED]"
     print("\n✅  Successfully installed old death sound!")
     print("\nPress any key to return to the menu.")
@@ -264,6 +264,26 @@ def importjson():
       time.sleep(1)
       savejson()
   savejson()
+
+
+# Choose app if it isnt detected
+
+def chooseapp():
+  os.system("clear")
+  newroblox = input('Drag the Roblox.app into the terminal (Enter : to cancel) > ')
+  global robloxapp
+  if ":" in newroblox: 
+    mainmenu()
+  if os.path.exists(newroblox.rstrip() + "/Contents/MacOS/RobloxPlayer"):
+    robloxapp = newroblox.rstrip() + "/Contents"
+    mainmenu()
+  else:
+    print("This is not a valid Roblox.app!")
+    time.sleep(1)
+    chooseapp()
+
+if not os.path.exists(robloxapp):
+  chooseapp()
 
 
 # Load the main menu
