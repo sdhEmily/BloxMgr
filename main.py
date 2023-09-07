@@ -11,8 +11,8 @@ def getkey(): # Credit to https://stackoverflow.com/a/1840
 
 # Initialize Data Directory
 
-datapath = os.path.expanduser('~') + "/Library/Application Support/sdhhhhh.RobloxPatcher"
-escdatapath = os.path.expanduser('~') + "/Library/Application\ Support/sdhhhhh.RobloxPatcher"
+datapath = os.path.expanduser('~') + "/Library/Application Support/sdhEmily.RobloxPatcher"
+escdatapath = os.path.expanduser('~') + "/Library/Application\ Support/sdhEmily.RobloxPatcher"
 robloxapp = "/Applications/Roblox.app/Contents"
 if not os.path.exists(datapath):
   os.makedirs(datapath)
