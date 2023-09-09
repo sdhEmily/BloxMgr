@@ -140,8 +140,8 @@ def oldoof():
     if os.path.exists(robloxapp + "/oldResources"):
       if os.path.exists(robloxapp + "/oldResources/content/sounds/oldouch.ogg"):
         os.rename(robloxapp + "/oldResources/content/sounds/ouch.ogg", robloxapp + "/oldResources/content/sounds/oldouch.ogg")
-        os.system("curl https://github.com/sdhEmily/RobloxPatcher-MacOS/raw/main/ouch.ogg -Lo " + robloxapp + "/oldResources/content/sounds/ouch.ogg")
-    os.system("curl https://github.com/sdhEmily/RobloxPatcher-MacOS/raw/main/ouch.ogg -Lo " + robloxapp + "/Resources/content/sounds/ouch.ogg")
+        os.system("curl https://github.com/sdhEmily/RobloxPatcher/raw/main/ouch.ogg -Lo " + robloxapp + "/oldResources/content/sounds/ouch.ogg")
+    os.system("curl https://github.com/sdhEmily/RobloxPatcher/raw/main/ouch.ogg -Lo " + robloxapp + "/Resources/content/sounds/ouch.ogg")
     olddeathapplied = "[APPLIED]"
     print("\n✅  Successfully installed old death sound!")
     print("\nPress any key to return to the menu.")
