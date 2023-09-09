@@ -7,13 +7,6 @@ RobloxPatcher is a python utility for MacOS\
 It allows you to easily install mods and modify FastFlags\
 You need [Python](https://www.python.org/downloads/) to use this
 
-## Features
-
-- Easy mod/FastFlag manager
-- Option to disable the beta app
-- Ability to restore the old death sound
-  
-
 
 ## Usage
 ### There are 2 ways to run RobloxPatcher
