@@ -1,13 +1,11 @@
-# RobloxPatcher
+<p align="center">
+  <img width="500" height="125" src="https://github.com/sdhEmily/RobloxPatcher/assets/143989797/dbca12cf-cf5a-47c0-b3a4-1611227d6c0e">
+</p>
 
-This tool offers various utilities for Roblox.
-
-## Launch Instructions 
-Simply paste this into your terminal and when you run it it will download the latest version of RobloxPatcher.\
-You need [Python](https://www.python.org/downloads/) to run this.
-```sh
-curl https://github.com/sdhEmily/RobloxPatcher/raw/main/main.py -Lo /tmp/RobloxPatcher.py && python3 /tmp/RobloxPatcher.py; rm /tmp/RobloxPatcher.py
-```
+#
+RobloxPatcher is a python utility for MacOS\
+It allows you to easily install mods and modify FastFlags\
+You need [Python](https://www.python.org/downloads/) to use this
 
 ## Features
 
@@ -15,3 +13,12 @@ curl https://github.com/sdhEmily/RobloxPatcher/raw/main/main.py -Lo /tmp/RobloxP
 - Option to disable the beta app
 - Ability to restore the old death sound
   
+
+
+## Usage
+### There are 2 ways to run RobloxPatcher
+1. Paste this one-liner in your terminal
+```sh
+curl https://github.com/sdhEmily/RobloxPatcher/raw/main/main.py -Lo /tmp/RobloxPatcher.py && python3 /tmp/RobloxPatcher.py; rm /tmp/RobloxPatcher.py
+```
+2. Download the release ([here](https://github.com/sdhEmily/RobloxPatcher/releases/download/v/RobloxPatcher.zip)) extract it and run the app
