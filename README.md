@@ -12,7 +12,7 @@ You need [Python](https://www.python.org/downloads/) to use this
 ```sh
 curl https://github.com/sdhEmily/RobloxPatcher/raw/main/main.py -Lo /tmp/RobloxPatcher.py && python3 /tmp/RobloxPatcher.py; rm /tmp/RobloxPatcher.py
 ```
-2. Download the release ([here](https://github.com/sdhEmily/RobloxPatcher/releases/download/v/RobloxPatcher.zip)) extract it and run the app
+2. Download the latest release ([here](https://github.com/sdhEmily/RobloxPatcher/releases/latest/)) extract it and run the app
 
 
 ## Building (the .app)
