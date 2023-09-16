@@ -302,29 +302,6 @@ def importjson():
 
 # Extra functions
 
-<<<<<<< HEAD
-# Choose app if it isnt detected
-
-def chooseapp():
-  os.system("clear")
-  newroblox = input('Drag the Roblox.app into the terminal (Enter : to cancel) > ')
-  global robloxapp
-  if ":" in newroblox: 
-    mainmenu()
-  if os.path.exists(newroblox.rstrip() + "/Contents/MacOS/RobloxPlayer"):
-    robloxapp = newroblox.rstrip() + "/Contents"
-    mainmenu()
-  else:
-    print("This is not a valid Roblox.app!")
-    time.sleep(1)
-    chooseapp()
-
-if not os.path.exists(robloxapp):
-  chooseapp()
-
-
-# Load the main menu
-=======
 def saveconfig():
   jsonfile = json.dumps(config, indent=1)
   os.chdir(datapath)
@@ -333,6 +310,5 @@ def saveconfig():
 
 
 # Load the main menu or start firestrap
->>>>>>> ee36e3d (new app for seamless updates (firefox only!!))
 
 mainmenu()
