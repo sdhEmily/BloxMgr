@@ -1,4 +1,11 @@
-import os, time, shutil, glob, json
+import os, sys, time, shutil, glob, json, plistlib, zipfile
+
+try:
+  import requests
+except ImportError:
+  os.system('python3 -m pip install requests')
+import requests
+
 def getkey(): # Credit to https://stackoverflow.com/a/1840
     import sys, tty, termios, select
     old_settings = termios.tcgetattr(sys.stdin)
@@ -20,7 +27,20 @@ if not os.path.exists(datapath + "/Modifications"):
   os.makedirs(datapath + "/Modifications")
 if not os.path.exists(datapath + "/FastFlags"):
   os.makedirs(datapath + "/FastFlags")
+if not os.path.exists(datapath + "/applied.json"):
+  settingsdict = {
+    "rmbeta": False,
+    "olddeath": False,
+    "modsapplied": False,
+    "fflagsapplied": False
+  }
+  jsonfile = json.dumps(settingsdict, indent=1)
+  os.chdir(datapath)
+  with open("applied.json", "w") as outfile:
+    outfile.write(jsonfile)
 
+
+config = json.load(open(datapath + "/applied.json"))
 
 # Menu Sections
 
@@ -74,7 +94,6 @@ def utilities():
 def mods():
   os.system('clear')
   print(" __  __         _    \n|  \/  |___  __| |___\n| |\/| / _ \/ _` (_-<\n|_|  |_\___/\__,_/__/\n")
-
   print ("1) Open mods folder\n2) Apply mods\n3) Remove mods\n4) Go back\n")
   print("Waiting for input...")
 
@@ -114,14 +133,18 @@ def mobilemenu():
     os.rename(robloxapp + "/Resources/ExtraContent/places/oldMobile.rbxl", robloxapp + "/Resources/ExtraContent/places/Mobile.rbxl")
     if os.path.exists(robloxapp + "/oldResources/ExtraContent/places/oldMobile.rbxl"):
       os.rename(robloxapp + "/oldResources/ExtraContent/places/oldMobile.rbxl", robloxapp + "/oldResources/ExtraContent/places/Mobile.rbxl")
-    utilities()
+    config["rmbeta"] = False
+    saveconfig()
     mobileapplied = ""
+    utilities()
   else:
     os.rename(robloxapp + "/Resources/ExtraContent/places/Mobile.rbxl", robloxapp + "/Resources/ExtraContent/places/oldMobile.rbxl")
     if os.path.exists(robloxapp + "/oldResources/ExtraContent/places/Mobile.rbxl"):
       os.rename(robloxapp + "/oldResources/ExtraContent/places/Mobile.rbxl", robloxapp + "/oldResources/ExtraContent/places/oldMobile.rbxl")
-    utilities()
+    config["rmbeta"] = True
+    saveconfig()
     mobileapplied = "[APPLIED]"
+    utilities()
 
 def oldoof():
   if os.path.exists(robloxapp + "/Resources/content/sounds/oldouch.ogg"):
@@ -132,6 +155,8 @@ def oldoof():
       os.remove(robloxapp + "/oldResources/content/sounds/ouch.ogg")
       os.rename(robloxapp + "/oldResources/content/sounds/oldouch.ogg", robloxapp + "/oldResources/content/sounds/ouch.ogg")
     olddeathapplied = ""
+    config["olddeath"] = False
+    saveconfig()
     utilities()
   else:
     os.rename(robloxapp + "/Resources/content/sounds/ouch.ogg", robloxapp + "/Resources/content/sounds/oldouch.ogg")
@@ -143,6 +168,8 @@ def oldoof():
         os.system("curl https://github.com/sdhEmily/RobloxPatcher/raw/main/ouch.ogg -Lo " + robloxapp + "/oldResources/content/sounds/ouch.ogg")
     os.system("curl https://github.com/sdhEmily/RobloxPatcher/raw/main/ouch.ogg -Lo " + robloxapp + "/Resources/content/sounds/ouch.ogg")
     olddeathapplied = "[APPLIED]"
+    config["olddeath"] = True
+    saveconfig()
     print("\n✅  Successfully installed old death sound!")
     print("\nPress any key to return to the menu.")
     if not getkey():
@@ -167,6 +194,8 @@ def installmods():
   os.system('/bin/cp -rf ' + escdatapath + '/Resources/. \"' + robloxapp + '/Resources\"')
   shutil.rmtree(datapath + "/Resources")
   print("✅ Successfully applied mods")
+  config["modsapplied"] = True
+  saveconfig()
   print("\nPress any key to return to the menu.")
   if not getkey():
     time.sleep()
@@ -178,6 +207,8 @@ def removemods():
   if os.path.exists(robloxapp + "/oldResources"):
     shutil.rmtree(robloxapp + "/Resources")
     os.rename(robloxapp + "/oldResources", robloxapp + "/Resources")
+  config["modsapplied"] = False
+  saveconfig()
   print("ℹ️  Successfully removed mods")
   print("\nPress any key to return to the menu.")
   if not getkey():
@@ -210,6 +241,8 @@ def installfflags():
   os.chdir(robloxapp + "/MacOS/ClientSettings")
   with open("ClientAppSettings.json", "w") as outfile:
     outfile.write(jsonfile)
+  config["fflagsapplied"] = True
+  saveconfig()
   print("✅ Successfully applied FastFlags")
   print("\nPress any key to return to the menu.")
   if not getkey():
@@ -221,6 +254,8 @@ def removefflags():
   print("ℹ️  Removing FastFlags, please wait...\n")
   if os.path.exists(robloxapp + "/MacOS/ClientSettings"):
     shutil.rmtree(robloxapp + "/MacOS/ClientSettings")
+  config["fflagsapplied"] = False
+  saveconfig()
   print("✅ Successfully removed FastFlags!")
   print("\nPress any key to return to the menu.")
   if not getkey():
@@ -265,7 +300,9 @@ def importjson():
       savejson()
   savejson()
 
+# Extra functions
 
+<<<<<<< HEAD
 # Choose app if it isnt detected
 
 def chooseapp():
@@ -287,5 +324,15 @@ if not os.path.exists(robloxapp):
 
 
 # Load the main menu
+=======
+def saveconfig():
+  jsonfile = json.dumps(config, indent=1)
+  os.chdir(datapath)
+  with open("applied.json", "w") as outfile:
+    outfile.write(jsonfile)
+
+
+# Load the main menu or start firestrap
+>>>>>>> ee36e3d (new app for seamless updates (firefox only!!))
 
 mainmenu()
