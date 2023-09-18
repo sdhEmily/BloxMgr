@@ -47,7 +47,7 @@
 	<key>PromptForFileOnLaunch</key>
 	<false/>
 	<key>RemainRunning</key>
-	<false/>
+	<true/>
 	<key>RunInBackground</key>
 	<false/>
 	<key>ScriptArgs</key>
