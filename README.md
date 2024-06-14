@@ -2,20 +2,13 @@
 
 # 
 
-RobloxPatcher is a python utility for MacOS\
+BloxMgr is a python utility for MacOS\
 It allows you to easily install mods and modify FastFlags\
 You need [Python](https://www.python.org/downloads/) to use this
 
 ## Usage
-### There are 2 ways to run RobloxPatcher
-1. Paste this one-liner in your terminal
+
+To use BloxMgr, paste this one-liner in your terminal
 ```sh
-curl https://github.com/sdhEmily/RobloxPatcher/raw/main/main.py -Lo /tmp/RobloxPatcher.py && python3 /tmp/RobloxPatcher.py; rm /tmp/RobloxPatcher.py
+curl https://github.com/sdhEmily/BloxMgr/raw/main/main.py -Lo /tmp/BloxMgr.py && python3 /tmp/BloxMgr.py; rm /tmp/BloxMgr.py
 ```
-2. Download the latest release ([here](https://github.com/sdhEmily/RobloxPatcher/releases/latest/)) extract it and run the app
-
-
-## Building (the .app)
-To build the app you will need to install [Platypus](https://github.com/sveinbjornt/Platypus)\
-Once Platypus is installed, clone the repo and open RobloxPatcher.platypus in the root directory\
-Simply click "Create App" and it will build the RobloxPatcher app.
