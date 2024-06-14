@@ -13,4 +13,4 @@ To use BloxMgr, paste this one-liner in your terminal
 curl https://github.com/sdhEmily/BloxMgr/raw/main/main.py -Lo /tmp/BloxMgr.py && python3 /tmp/BloxMgr.py; rm /tmp/BloxMgr.py
 ```
 \
-Check out the wiki for [guides](https://github.com/sdhEmily/BloxMgr/wiki) on how to create mods and manage FastFlags.
+Check out the [wiki](https://github.com/sdhEmily/BloxMgr/wiki) for guides on how to create mods and manage FastFlags.
