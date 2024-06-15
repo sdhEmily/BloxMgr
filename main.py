@@ -42,7 +42,7 @@ def setup():
   exec('clear', '.')
   print(' ___      _             \n/ __| ___| |_ _  _ _ __ \n\__ \/ -_)  _| || | \'_ \\\n|___/\___|\__|\_,_| .__/\n                  |_|   ')
 
-  print('\nWelcome to BloxMgr!\nTo use BloxMgr you have to disable ROBLOX\'s auto updating as BloxMgr breaks it.\nYou can update ROBLOX through BloxMgr.\nBloxMgr also disables the desktop app due to it being problematic.')
+  print('\nWelcome to BloxMgr!\nTo use BloxMgr you have to disable ROBLOX\'s auto updating as BloxMgr breaks it.\nYou can update ROBLOX through BloxMgr.')
 
   print ('\n1) Install BloxMgr\n2) Quit\n')
   print('Waiting for input...')
@@ -239,8 +239,6 @@ def update():
   os.remove('/tmp/RobloxPlayer.zip')
   shutil.rmtree(robloxapp)
   shutil.copytree('/tmp/RobloxPlayer.app', '/Applications/Roblox.app', dirs_exist_ok=True)
-  if os.path.exists(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl'):
-    os.remove(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl')
   dir = glob.glob(robloxapp + '/MacOS/*')
   for file in dir:
     if not file.endswith('.app'):
@@ -297,8 +295,6 @@ def install():
 
   if os.path.exists(robloxapp + '/MacOS/RobloxPlayerInstaller.app'):
     shutil.rmtree(robloxapp + '/MacOS/RobloxPlayerInstaller.app')
-  if os.path.exists(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl'):
-    os.remove(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl')
 
   print('\n✅ Successfully installed BloxMgr')
   print('\nPress any key to go to the main menu.')
