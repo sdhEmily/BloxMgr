@@ -42,7 +42,7 @@ def setup():
   exec('clear', '.')
   print(' ___      _             \n/ __| ___| |_ _  _ _ __ \n\__ \/ -_)  _| || | \'_ \\\n|___/\___|\__|\_,_| .__/\n                  |_|   ')
 
-  print('\nWelcome to BloxMgr!\nTo use BloxMgr you have to disable ROBLOX\'s auto updating as BloxMgr breaks it.\nYou can update ROBLOX through BloxMgr.')
+  print('\nWelcome to BloxMgr!\nTo use BloxMgr you have to disable ROBLOX\'s auto updating as BloxMgr breaks it.\nYou can update ROBLOX through BloxMgr.\nBloxMgr also disables the desktop app due to it being problematic.')
 
   print ('\n1) Install BloxMgr\n2) Quit\n')
   print('Waiting for input...')
@@ -230,7 +230,7 @@ def importjson():
 def update():
   exec('clear', '.')
   print('ℹ️  Downloading ROBLOX...')
-  downloadlink = 'https://setup.rbxcdn.com/mac/' + clientsettings['clientVersionUpload'] + '-RobloxPlayer.zip'
+  downloadlink = 'https://roblox-setup.cachefly.net/mac/' + clientsettings['clientVersionUpload'] + '-RobloxPlayer.zip'
   dl = requests.get(downloadlink, allow_redirects=True)
   open('/tmp/RobloxPlayer.zip', 'wb').write(dl.content)
   print('ℹ️  Extracting...')
@@ -239,12 +239,14 @@ def update():
   os.remove('/tmp/RobloxPlayer.zip')
   shutil.rmtree(robloxapp)
   shutil.copytree('/tmp/RobloxPlayer.app', '/Applications/Roblox.app', dirs_exist_ok=True)
-  dir = glob.glob('/Applications/Roblox.app/Contents/MacOS/*')
+  if os.path.exists(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl'):
+    os.remove(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl')
+  dir = glob.glob(robloxapp + '/MacOS/*')
   for file in dir:
     if not file.endswith('.app'):
       current = os.stat(file)
       os.chmod(file, current.st_mode | stat.S_IEXEC)
-      dir = glob.glob('/Applications/Roblox.app/Contents/MacOS/Roblox.app/Contents/MacOS/*')
+      dir = glob.glob(robloxapp + '/MacOS/Roblox.app/Contents/MacOS/*')
       for file in dir:
         if not file.endswith('.app'):
           current = os.stat(file)
@@ -252,10 +254,8 @@ def update():
   shutil.rmtree(robloxapp + '/MacOS/RobloxPlayerInstaller.app')
   if config['modsapplied']:
     print('ℹ️  Applying Mods...')
-    shutil.copytree('/Applications/Roblox.app/Contents/Resources', '/Applications/Roblox.app/Contents/oldResources')
-    shutil.copytree(datapath + '/Modifications', datapath + '/Resources')
-    shutil.copytree(datapath + '/Resources', '/Applications/Roblox.app/Contents/Resources', dirs_exist_ok=True)
-    shutil.rmtree(datapath + '/Resources')
+    shutil.copytree(robloxapp + '/Resources', robloxapp + '/oldResources')
+    shutil.copytree(datapath + '/Modifications', robloxapp + '/Resources', dirs_exist_ok=True)
   if config['fflagsapplied']:
     print('ℹ️  Applying FFlags...')
     os.chdir(datapath + '/FastFlags/')
@@ -266,12 +266,8 @@ def update():
           for key, value in file_content.items():
             finaljson[key] = value
     jsonfile = json.dumps(finaljson, indent=1)
-    if os.path.exists('/Applications/Roblox.app/Contents/MacOS/ClientSettings'):
-      shutil.rmtree('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
-      os.makedirs('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
-    else:
-      os.makedirs('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
-    os.chdir('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
+    os.makedirs(robloxapp + '/MacOS/ClientSettings')
+    os.chdir(robloxapp + '/MacOS/ClientSettings')
     with open('ClientAppSettings.json', 'w') as outfile:
       outfile.write(jsonfile)
   print('\n✅ Successfully updated ROBLOX')
@@ -301,6 +297,8 @@ def install():
 
   if os.path.exists(robloxapp + '/MacOS/RobloxPlayerInstaller.app'):
     shutil.rmtree(robloxapp + '/MacOS/RobloxPlayerInstaller.app')
+  if os.path.exists(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl'):
+    os.remove(robloxapp + '/Resources/ExtraContent/places/Mobile.rbxl')
 
   print('\n✅ Successfully installed BloxMgr')
   print('\nPress any key to go to the main menu.')
