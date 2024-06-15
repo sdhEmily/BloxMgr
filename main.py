@@ -1,4 +1,11 @@
-import os, sys, time, subprocess, json, shutil, glob
+import os, sys, time, subprocess, json, shutil, glob, plistlib, zipfile, stat
+
+try:
+  import requests
+except ImportError:
+  os.system('python3 -m pip install requests')
+  import requests
+
 
 def getkey(): # Credit to https://stackoverflow.com/a/1840
     import sys, tty, termios, select
@@ -9,14 +16,14 @@ def getkey(): # Credit to https://stackoverflow.com/a/1840
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
     return answer
 
-datapath = os.path.expanduser('~') + '/Library/Application Support/sdhEmily.BloxMgr'
-robloxapp = '/Applications/Roblox.app/Contents' # not to e removed im too lazy to do allat rn.
+firstrun = False
+datapath = os.path.expanduser('~') + '/Library/Application Support/sdhEvelyn.BloxMgr'
+robloxapp = '/Applications/Roblox.app/Contents' # u can change this if u want 
 if not os.path.exists(datapath):
-  os.makedirs(datapath)
-if not os.path.exists(datapath + '/Modifications'):
-  os.makedirs(datapath + '/Modifications')
-if not os.path.exists(datapath + '/FastFlags'):
-  os.makedirs(datapath + '/FastFlags')
+  firstrun = True
+
+if not firstrun:
+  config = json.load(open(datapath + '/applied.json'))
 
 def exec(cmd, args, path=None, sh=False):
   if path != None:
@@ -24,18 +31,41 @@ def exec(cmd, args, path=None, sh=False):
   else:
     subprocess.call([cmd, args], shell=sh)
 
+with open('/Applications/Roblox.app/Contents/info.plist', 'rb') as infile:
+  localversion = plistlib.load(infile)['CFBundleShortVersionString']
+clientsettings = requests.get('https://clientsettingscdn.roblox.com/v2/client-version/MacPlayer/channel/LIVE').json()
+version = clientsettings['version']
+
 # Menu Sections
+
+def setup():
+  exec('clear', '.')
+  print(' ___      _             \n/ __| ___| |_ _  _ _ __ \n\__ \/ -_)  _| || | \'_ \\\n|___/\___|\__|\_,_| .__/\n                  |_|   ')
+
+  print('\nWelcome to BloxMgr!\nTo use BloxMgr you have to disable ROBLOX\'s auto updating as BloxMgr breaks it.\nYou can update ROBLOX through BloxMgr.')
+
+  print ('\n1) Install BloxMgr\n2) Quit\n')
+  print('Waiting for input...')
+  answer=getkey()
+  if '1' in answer: install()
+  elif '2' in answer: exit()
+  elif answer:
+    print('Please enter a valid number.')
+    time.sleep(1) 
+    mainmenu()
 
 def mainmenu():
   exec('clear', '.')
   print(' ___ _         __  __          \n| _ ) |_____ _|  \/  |__ _ _ _ \n| _ \ / _ \ \ / |\/| / _` | \'_|\n|___/_\___/_\_\_|  |_\__, |_|  \n                     |___/     ')
+  print('\nInstalled ROBLOX Version: ' + localversion + '\nLatest ROBLOX Version: ' + version)
 
-  print ('1) Mods\n2) FastFlags\n3) Quit\n')
+  print ('\n1) Mods\n2) FastFlags\n3) Update/Reinstall ROBLOX\n4) Quit\n')
   print('Waiting for input...')
   answer=getkey()
   if '1' in answer: mods()
   elif '2' in answer: fflags()
-  elif '3' in answer: exit()
+  elif '3' in answer: update()
+  elif '4' in answer: exit()
   elif answer:
     print('Please enter a valid number.')
     time.sleep(1) 
@@ -82,13 +112,15 @@ def openmfolder():
 
 def installmods():
   exec('clear', '.')
-  print('ℹ️  Applying mods, please wait...\n')
+  print('ℹ️  Applying mods...\n')
   if os.path.exists(robloxapp + '/oldResources'):
     shutil.rmtree(robloxapp + '/Resources')
     os.rename(robloxapp + '/oldResources', robloxapp + '/Resources')
   shutil.copytree(robloxapp + '/Resources', robloxapp + '/oldResources')
   shutil.copytree(datapath + '/Modifications', robloxapp + '/Resources', dirs_exist_ok=True)
   print('✅ Successfully applied mods')
+  config['modsapplied'] = True
+  saveconfig()
   print('\nPress any key to return to the menu.')
   if not getkey():
     time.sleep()
@@ -96,11 +128,13 @@ def installmods():
 
 def removemods():
   exec('clear', '.')
-  print('ℹ️  Removing mods, Please wait...\n')
+  print('ℹ️  Removing mods...\n')
   if os.path.exists(robloxapp + '/oldResources'):
     shutil.rmtree(robloxapp + '/Resources')
     os.rename(robloxapp + '/oldResources', robloxapp + '/Resources')
   print('ℹ️  Successfully removed mods')
+  config['modsapplied'] = False
+  saveconfig()
   print('\nPress any key to return to the menu.')
   if not getkey():
     time.sleep()
@@ -115,7 +149,7 @@ def openffolder():
 
 def installfflags():
   exec('clear', '.')
-  print('ℹ️  Applying FastFlags, please wait...\n')
+  print('ℹ️  Applying FastFlags...\n')
   os.chdir(datapath + '/FastFlags/')
   finaljson = {}
   for f in glob.glob('*.json'):
@@ -133,6 +167,8 @@ def installfflags():
   with open('ClientAppSettings.json', 'w') as outfile:
     outfile.write(jsonfile)
   print('✅ Successfully applied FastFlags')
+  config['fflagsapplied'] = True
+  saveconfig()
   print('\nPress any key to return to the menu.')
   if not getkey():
     time.sleep()
@@ -140,10 +176,12 @@ def installfflags():
 
 def removefflags():
   exec('clear', '.')
-  print('ℹ️  Removing FastFlags, please wait...\n')
+  print('ℹ️  Removing FastFlags...\n')
   if os.path.exists(robloxapp + '/MacOS/ClientSettings'):
     shutil.rmtree(robloxapp + '/MacOS/ClientSettings')
   print('✅ Successfully removed FastFlags!')
+  config['fflagsapplied'] = False
+  saveconfig()
   print('\nPress any key to return to the menu.')
   if not getkey():
     time.sleep()
@@ -187,6 +225,101 @@ def importjson():
       savejson()
   savejson()
 
-# Load the main menu
+# Misc Functions
 
-mainmenu()
+def update():
+  exec('clear', '.')
+  print('ℹ️  Downloading ROBLOX...')
+  downloadlink = 'https://setup.rbxcdn.com/mac/' + clientsettings['clientVersionUpload'] + '-RobloxPlayer.zip'
+  dl = requests.get(downloadlink, allow_redirects=True)
+  open('/tmp/RobloxPlayer.zip', 'wb').write(dl.content)
+  print('ℹ️  Extracting...')
+  with zipfile.ZipFile('/tmp/RobloxPlayer.zip') as zip:
+    zip.extractall('/tmp/')
+  os.remove('/tmp/RobloxPlayer.zip')
+  shutil.rmtree(robloxapp)
+  shutil.copytree('/tmp/RobloxPlayer.app', '/Applications/Roblox.app', dirs_exist_ok=True)
+  dir = glob.glob('/Applications/Roblox.app/Contents/MacOS/*')
+  for file in dir:
+    if not file.endswith('.app'):
+      current = os.stat(file)
+      os.chmod(file, current.st_mode | stat.S_IEXEC)
+      dir = glob.glob('/Applications/Roblox.app/Contents/MacOS/Roblox.app/Contents/MacOS/*')
+      for file in dir:
+        if not file.endswith('.app'):
+          current = os.stat(file)
+          os.chmod(file, current.st_mode | stat.S_IEXEC)
+  shutil.rmtree(robloxapp + '/MacOS/RobloxPlayerInstaller.app')
+  if config['modsapplied']:
+    print('ℹ️  Applying Mods...')
+    shutil.copytree('/Applications/Roblox.app/Contents/Resources', '/Applications/Roblox.app/Contents/oldResources')
+    shutil.copytree(datapath + '/Modifications', datapath + '/Resources')
+    shutil.copytree(datapath + '/Resources', '/Applications/Roblox.app/Contents/Resources', dirs_exist_ok=True)
+    shutil.rmtree(datapath + '/Resources')
+  if config['fflagsapplied']:
+    print('ℹ️  Applying FFlags...')
+    os.chdir(datapath + '/FastFlags/')
+    finaljson = {}
+    for f in glob.glob('*.json'):
+        with open(f, 'r', encoding='utf-8') as infile:
+          file_content = json.load(infile)
+          for key, value in file_content.items():
+            finaljson[key] = value
+    jsonfile = json.dumps(finaljson, indent=1)
+    if os.path.exists('/Applications/Roblox.app/Contents/MacOS/ClientSettings'):
+      shutil.rmtree('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
+      os.makedirs('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
+    else:
+      os.makedirs('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
+    os.chdir('/Applications/Roblox.app/Contents/MacOS/ClientSettings')
+    with open('ClientAppSettings.json', 'w') as outfile:
+      outfile.write(jsonfile)
+  print('\n✅ Successfully updated ROBLOX')
+  print('\nPress any key to go to the main menu.')
+  if not getkey():
+    time.sleep()
+  mainmenu()
+
+def install():
+  print('ℹ️  Installing BloxMgr...\n')
+  
+  os.makedirs(datapath)
+  if not os.path.exists(datapath + '/Modifications'):
+    os.makedirs(datapath + '/Modifications')
+  if not os.path.exists(datapath + '/FastFlags'):
+    os.makedirs(datapath + '/FastFlags')
+  settingsdict = {
+    'modsapplied': False,
+    'fflagsapplied': False
+  }
+  jsonfile = json.dumps(settingsdict, indent=1)
+  os.chdir(datapath)
+  with open('applied.json', 'w') as outfile:
+    outfile.write(jsonfile)
+  config = json.load(open(datapath + '/applied.json'))
+
+
+  if os.path.exists(robloxapp + '/MacOS/RobloxPlayerInstaller.app'):
+    shutil.rmtree(robloxapp + '/MacOS/RobloxPlayerInstaller.app')
+
+  print('\n✅ Successfully installed BloxMgr')
+  print('\nPress any key to go to the main menu.')
+  if not getkey():
+    time.sleep()
+  mainmenu()
+
+
+def saveconfig():
+  jsonfile = json.dumps(config, indent=1)
+  os.chdir(datapath)
+  with open('applied.json', 'w') as outfile:
+    outfile.write(jsonfile)
+
+# Load the main menu or the setup
+
+if firstrun:
+  setup()
+else:
+  mainmenu()
+
+
