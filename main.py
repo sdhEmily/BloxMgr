@@ -275,6 +275,7 @@ def update():
   mainmenu()
 
 def install():
+  exec('clear', '.')
   print('ℹ️  Installing BloxMgr...\n')
   
   os.makedirs(datapath)
