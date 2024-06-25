@@ -8,6 +8,6 @@ You need [Python](https://www.python.org/downloads/) to use this
 
 ## Usage
 
-To install BloxMgr, download the [app](https://github.com/sdhEvelyn/BloxMgr/releases/tag/app) and launch it.
+To install BloxMgr, download the [app](https://github.com/sdhEmily/BloxMgr/releases/tag/app) and launch it.
 \
-Check out the [wiki](https://github.com/sdhEvelyn/BloxMgr/wiki) for guides on how to create mods and manage FastFlags.
+Check out the [wiki](https://github.com/sdhEmily/BloxMgr/wiki) for guides on how to create mods and manage FastFlags.
