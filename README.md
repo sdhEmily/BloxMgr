@@ -1,4 +1,4 @@
-<img src="https://github.com/sdhEvelyn/BloxMgr/assets/143989797/141e7f4c-4db3-4ec6-9a5e-a609ae8ffd57" alt="BloxMgr Logo" width="500"/>
+<img src="https://github.com/sdhEmily/BloxMgr/assets/143989797/141e7f4c-4db3-4ec6-9a5e-a609ae8ffd57" alt="BloxMgr Logo" width="500"/>
 
 # 
 
