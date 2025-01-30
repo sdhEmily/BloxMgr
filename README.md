@@ -1,3 +1,8 @@
+THIS IS ARCHIVED BECAUSE I NO LONGER PLAY ROBLOX. CHECK OUT [APPLEBLOX](https://github.com/AppleBlox/appleblox) FOR A SIMILAR PROJECT (but way better lol)
+\
+\
+\
+\
 <img src="https://github.com/sdhEmily/BloxMgr/assets/143989797/141e7f4c-4db3-4ec6-9a5e-a609ae8ffd57" alt="BloxMgr Logo" width="500"/>
 
 # 
