@@ -2,12 +2,13 @@
 
 # 
 
-BloxMgr is a python utility for MacOS\
-It allows you to easily install mods and modify FastFlags\
-You need [Python](https://www.python.org/downloads/) to use this
+
+BloxMgr is a lightweight python Roblox modding utility for macOS.\
+It allows you to easily install mods and modify FastFlags.
 
 ## Usage
 
-To install BloxMgr, download the [app](https://github.com/sdhEmily/BloxMgr/releases/tag/app) and launch it.
+To install BloxMgr, download the [app](https://github.com/sdhEmily/BloxMgr/releases/tag/app) and launch it.\
+It should prompt you to download python3, install it.
 \
 Check out the [wiki](https://github.com/sdhEmily/BloxMgr/wiki) for guides on how to create mods and manage FastFlags.
