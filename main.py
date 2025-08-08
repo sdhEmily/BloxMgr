@@ -44,7 +44,7 @@ def setup():
   exec('clear', '.')
   print(' ___      _             \n/ __| ___| |_ _  _ _ __ \n\__ \/ -_)  _| || | \'_ \\\n|___/\___|\__|\_,_| .__/\n                  |_|   ')
 
-  print('\nWelcome to BloxMgr!\nTo use BloxMgr you have to disable ROBLOX\'s auto updating as BloxMgr breaks it.\nYou can update ROBLOX through BloxMgr.')
+  print('\nWelcome to BloxMgr!\nTo use BloxMgr you have to disable Roblox\'s auto updating as BloxMgr breaks it.\nYou can update Roblox through BloxMgr.')
 
   print ('\n1) Install BloxMgr\n2) Quit\n')
   print('Waiting for input...')
@@ -59,9 +59,9 @@ def setup():
 def mainmenu():
   exec('clear', '.')
   print(' ___ _         __  __          \n| _ ) |_____ _|  \/  |__ _ _ _ \n| _ \ / _ \ \ / |\/| / _` | \'_|\n|___/_\___/_\_\_|  |_\__, |_|  \n                     |___/     ')
-  print('\nInstalled ROBLOX Version: ' + localversion + '\nLatest ROBLOX Version: ' + version)
+  print('\nInstalled Roblox Version: ' + localversion + '\nLatest Roblox Version: ' + version)
 
-  print ('\n1) Mods\n2) FastFlags\n3) Update/Reinstall ROBLOX\n4) Quit\n')
+  print ('\n1) Mods\n2) FastFlags\n3) Update/Reinstall Roblox\n4) Quit\n')
   print('Waiting for input...')
   answer=getkey()
   if '1' in answer: mods()
@@ -231,7 +231,7 @@ def importjson():
 
 def update():
   exec('clear', '.')
-  print('ℹ️  Downloading ROBLOX...')
+  print('ℹ️  Downloading Roblox...')
   try:
     os.remove('/tmp/RobloxPlayer.zip')
   except OSError:
@@ -273,7 +273,7 @@ def update():
     os.chdir(robloxapp + '/MacOS/ClientSettings')
     with open('ClientAppSettings.json', 'w') as outfile:
       outfile.write(jsonfile)
-  print('\n✅ Successfully updated ROBLOX')
+  print('\n✅ Successfully updated Roblox')
   print('\nPress any key to go to the main menu.')
   if not getkey():
     time.sleep()
