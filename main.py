@@ -1,4 +1,5 @@
-import os, sys, time, subprocess, json, shutil, glob, plistlib, zipfile, stat
+import os, sys, time, subprocess, json, shutil, glob, plistlib, zipfile, stat, warnings
+warnings.filterwarnings("ignore", module="urllib3") # annoying modern macos quirk with phython
 
 try:
   import requests
@@ -17,7 +18,7 @@ def getkey(): # Credit to https://stackoverflow.com/a/1840
     return answer
 
 firstrun = False
-datapath = os.path.expanduser('~') + '/Library/Application Support/sdhEvelyn.BloxMgr'
+datapath = os.path.expanduser('~') + '/Library/Application Support/sdhEmily.BloxMgr'
 robloxapp = '/Applications/Roblox.app/Contents' # u can change this if u want 
 if not os.path.exists(datapath):
   firstrun = True
@@ -316,5 +317,3 @@ if firstrun:
   setup()
 else:
   mainmenu()
-
-
