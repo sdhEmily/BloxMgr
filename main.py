@@ -2,10 +2,11 @@ import os, sys, time, subprocess, json, shutil, glob, plistlib, zipfile, stat, w
 warnings.filterwarnings("ignore", module="urllib3") # annoying modern macos quirk with phython
 
 try:
-  import requests
+  import requests, wget
 except ImportError:
   os.system('python3 -m pip install requests')
-  import requests
+  os.system('python3 -m pip install wget')
+  import requests, wget
 
 
 def getkey(): # Credit to https://stackoverflow.com/a/1840
@@ -231,9 +232,12 @@ def importjson():
 def update():
   exec('clear', '.')
   print('ℹ️  Downloading ROBLOX...')
+  try:
+    os.remove('/tmp/RobloxPlayer.zip')
+  except OSError:
+    pass
   downloadlink = 'https://roblox-setup.cachefly.net/mac/' + clientsettings['clientVersionUpload'] + '-RobloxPlayer.zip'
-  dl = requests.get(downloadlink, allow_redirects=True)
-  open('/tmp/RobloxPlayer.zip', 'wb').write(dl.content)
+  wget.download(downloadlink, out = '/tmp/RobloxPlayer.zip')
   print('ℹ️  Extracting...')
   with zipfile.ZipFile('/tmp/RobloxPlayer.zip') as zip:
     zip.extractall('/tmp/')
