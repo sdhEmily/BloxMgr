@@ -60,6 +60,7 @@ def mainmenu():
   exec('clear', '.')
   print(' ___ _         __  __          \n| _ ) |_____ _|  \/  |__ _ _ _ \n| _ \ / _ \ \ / |\/| / _` | \'_|\n|___/_\___/_\_\_|  |_\__, |_|  \n                     |___/     ')
   print('\nInstalled Roblox Version: ' + localversion + '\nLatest Roblox Version: ' + version)
+  print('\nBloxMgr is now EOL. Thank you for using BloxMgr!')
 
   print ('\n1) Mods\n2) FastFlags\n3) Update/Reinstall Roblox\n4) Quit\n')
   print('Waiting for input...')
